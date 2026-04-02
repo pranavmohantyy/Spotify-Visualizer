@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Music Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="login">
+        <h1>Spotify Music Visualizer</h1>
+        <button id="login-btn">Login to Spotify</button>
+    </div>
+    <div id="player" style="display:none;">
+        <canvas id="visualizer" width="800" height="400"></canvas>
+        <div id="controls">
+            <button id="play-pause">Play</button>
+            <button id="next">Next</button>
+            <button id="previous">Previous</button>
+        </div>
+    </div>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
