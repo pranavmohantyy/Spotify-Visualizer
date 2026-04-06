@@ -6,6 +6,7 @@ let player;
 let analysis = null;
 let currentTrackId = null;
 let animationId;
+let previousBars = new Array(12).fill(0); // For smoothing animation
 
 // Login function
 function login() {
@@ -106,15 +107,48 @@ function animate() {
 }
 
 function drawBars(values) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Add subtle background with slight transparency for trail effect
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
     const barWidth = canvas.width / values.length;
-    values.forEach((val, i) => {
-        const height = val * 4; // Scale height
-        const x = i * barWidth;
-        const y = canvas.height - height;
-        ctx.fillStyle = '#1db954';
-        ctx.fillRect(x, y, barWidth - 2, height);
+    
+    // Apply smoothing to create fluid animation
+    const smoothedBars = values.map((val, i) => {
+        previousBars[i] = previousBars[i] * 0.7 + val * 0.3; // Smooth transition
+        return previousBars[i];
     });
+    
+    smoothedBars.forEach((height, i) => {
+        const scaledHeight = height * 4; // Scale height
+        const x = i * barWidth;
+        const y = canvas.height - scaledHeight;
+        const barX = x + 1;
+        const barWidth2 = barWidth - 2;
+        
+        // Create gradient color based on bar position and height
+        const gradient = ctx.createLinearGradient(barX, canvas.height, barX, y);
+        const hue = (i / smoothedBars.length) * 360; // Color rotates across bars
+        const brightness = Math.min(100, 50 + (height / 100) * 50); // Brighter when taller
+        
+        gradient.addColorStop(0, `hsl(${hue}, 100%, ${brightness - 20}%)`);
+        gradient.addColorStop(0.7, `hsl(${hue}, 100%, ${brightness}%)`);
+        gradient.addColorStop(1, `hsl(${hue}, 100%, ${brightness + 20}%)`);
+        
+        ctx.fillStyle = gradient;
+        
+        // Add glow effect
+        ctx.shadowColor = `hsl(${hue}, 100%, ${brightness}%)`;
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        
+        // Draw the bar
+        ctx.fillRect(barX, y, barWidth2, scaledHeight);
+    });
+    
+    // Reset shadow for next frame
+    ctx.shadowBlur = 0;
 }
 
 // Control buttons
