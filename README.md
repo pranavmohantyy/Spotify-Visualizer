@@ -5,7 +5,9 @@ A web application that visualizes Spotify music playback with animated equalizer
 ## Features
 
 - Spotify integration for playback control
-- Real-time animated bars synced with music
+- Real-time animated bars synced with music with smooth transitions
+- Dynamic gradient colors that shift across the spectrum
+- Glow effects and trail animation for visual depth
 - Responsive web interface
 
 ## Setup
@@ -27,11 +29,11 @@ A web application that visualizes Spotify music playback with animated equalizer
 - [x] Spotify authentication and player integration
 - [x] Audio analysis fetching from Spotify API
 - [x] Canvas-based bar visualization
-- [x] Playback controls (play/pause, next, previous)
-- [x] Basic styling and UI
+- [x] Improved bar animation with smoothing and colors (gradient, glow effects, trail animation)
 
 ## Todo
 
+- [ ] Add equalizer presets (e.g., rock, pop, jazz)
 - [ ] Add equalizer presets (e.g., rock, pop, jazz)
 - [ ] Improve bar animation with smoothing and colors
 - [ ] Add volume control slider
@@ -41,3 +43,4 @@ A web application that visualizes Spotify music playback with animated equalizer
 - [ ] Mobile responsiveness
 - [ ] Documentation and code comments
 
+AI Used for documentation
