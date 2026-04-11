@@ -40,3 +40,26 @@ button {
 button:hover {
     background: #1ed760;
 }
+
+#volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+#volume-control label {
+    font-size: 14px;
+}
+
+#volume-slider {
+    width: 100px;
+    height: 5px;
+    cursor: pointer;
+    accent-color: #1db954;
+}
+
+#volume-value {
+    font-size: 14px;
+    min-width: 35px;
+}
