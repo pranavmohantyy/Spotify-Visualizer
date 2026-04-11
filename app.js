@@ -163,3 +163,15 @@ document.getElementById('next').addEventListener('click', () => {
 document.getElementById('previous').addEventListener('click', () => {
     player.previousTrack();
 });
+
+// Volume control
+const volumeSlider = document.getElementById('volume-slider');
+const volumeValue = document.getElementById('volume-value');
+
+volumeSlider.addEventListener('input', (e) => {
+    const volume = e.target.value / 100; // Convert to 0-1 range
+    volumeValue.textContent = e.target.value + '%';
+    if (player) {
+        player.setVolume(volume);
+    }
+});
