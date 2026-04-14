@@ -63,3 +63,41 @@ button:hover {
     font-size: 14px;
     min-width: 35px;
 }
+
+#progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#current-time, #total-time {
+    font-size: 12px;
+    min-width: 35px;
+}
+
+#progress-bar {
+    flex: 1;
+    height: 5px;
+    cursor: pointer;
+    accent-color: #1db954;
+}
+
+#track-info {
+    margin-top: 15px;
+    text-align: center;
+    max-width: 800px;
+}
+
+#track-info h2 {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+#track-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #b3b3b3;
+}
