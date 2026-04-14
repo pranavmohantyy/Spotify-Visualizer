@@ -13,6 +13,15 @@
     </div>
     <div id="player" style="display:none;">
         <canvas id="visualizer" width="800" height="400"></canvas>
+        <div id="progress-container">
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress-bar" min="0" max="100" value="0">
+            <span id="total-time">0:00</span>
+        </div>
+        <div id="track-info">
+            <h2 id="track-name">Loading...</h2>
+            <p id="artist-name"></p>
+        </div>
         <div id="controls">
             <button id="play-pause">Play</button>
             <button id="next">Next</button>
