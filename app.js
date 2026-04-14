@@ -7,6 +7,8 @@ let analysis = null;
 let currentTrackId = null;
 let animationId;
 let previousBars = new Array(12).fill(0); // For smoothing animation
+let isSeeking = false;
+let currentDuration = 0;
 
 // Login function
 function login() {
@@ -50,7 +52,9 @@ function initPlayer(token) {
                 const track = state.track_window.current_track;
                 if (track.id !== currentTrackId) {
                     currentTrackId = track.id;
+                    currentDuration = track.duration_ms / 1000; // Convert to seconds
                     fetchAnalysis(track.id, token);
+                    updateTrackInfo(track);
                 }
                 // Update play/pause button
                 const playPauseBtn = document.getElementById('play-pause');
@@ -91,6 +95,7 @@ function animate() {
     player.getCurrentState().then(state => {
         if (state && !state.paused) {
             const position = state.position / 1000; // Convert to seconds
+            updateProgress(position); // Update progress bar
             const segment = analysis.segments.find(seg => seg.start <= position && seg.start + seg.duration > position);
             if (segment) {
                 // Use timbre values for bar heights (12 values)
@@ -175,3 +180,55 @@ volumeSlider.addEventListener('input', (e) => {
         player.setVolume(volume);
     }
 });
+
+// Progress bar control
+const progressBar = document.getElementById('progress-bar');
+const currentTimeDisplay = document.getElementById('current-time');
+const totalTimeDisplay = document.getElementById('total-time');
+
+progressBar.addEventListener('mousedown', () => {
+    isSeeking = true;
+});
+
+progressBar.addEventListener('mouseup', (e) => {
+    isSeeking = false;
+    if (player && currentDuration) {
+        const seekPosition = (e.target.value / 100) * currentDuration * 1000; // Convert to milliseconds
+        player.seek(seekPosition);
+    }
+});
+
+progressBar.addEventListener('input', (e) => {
+    if (isSeeking && currentDuration) {
+        const currentSeconds = (e.target.value / 100) * currentDuration;
+        currentTimeDisplay.textContent = formatTime(currentSeconds);
+    }
+});
+
+// Update progress bar and time display
+function updateProgress(position) {
+    if (!isSeeking && currentDuration) {
+        const percentage = (position / currentDuration) * 100;
+        progressBar.value = Math.min(100, Math.max(0, percentage));
+        currentTimeDisplay.textContent = formatTime(position);
+        totalTimeDisplay.textContent = formatTime(currentDuration);
+    }
+}
+
+// Format seconds to MM:SS
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Update track information display
+function updateTrackInfo(track) {
+    const trackName = document.getElementById('track-name');
+    const artistName = document.getElementById('artist-name');
+    const totalTime = document.getElementById('total-time');
+    
+    trackName.textContent = track.name;
+    artistName.textContent = track.artists.map(artist => artist.name).join(', ');
+    totalTime.textContent = formatTime(track.duration_ms / 1000);
+}
