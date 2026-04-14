@@ -48,7 +48,7 @@ A web application that visualizes Spotify music playback with animated equalizer
 
 **Project Status**: Version 1.0.0 - Production Ready
 
-## Future Enhancements (Optional)
+## Future Enhancements (Maybe later lol)
 
 - [ ] Add equalizer presets (e.g., rock, pop, jazz)
 - [ ] Add support for multiple devices
